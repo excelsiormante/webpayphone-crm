@@ -7,36 +7,57 @@ use App\Http\Controllers\Controller;
 
 class APICredentialController extends Controller {
     public function show_login(){
+        $return = "";
         try {
-            return view('admin.login');
+            $hasLoggedIn = Session::has('userdata');
+            if ( $hasLoggedIn ) {
+                $return = Redirect::to('/');
+            } else {
+                $return = view('admin.login');
+            }
         } catch (Exception $exc) {
             
         }
+        return $return;
     }
     
     public function login(){
+        $return = "";
         try {
             $username = Input::get('username');
             $password = Input::get('password');
-            $query = "SELECT * FROM pgc_halo.fn_admin_login(?,?)
+            $query = "SELECT *  FROM pgc_halo.fn_admin_login(?,?)
                       RESULT (user_id integer, username varchar, full_name varchar, user_type_id integer, email_address varchar, status integer);";
             $values = array($username,$password);
             $result = DB::select($query, $values);
             if ( count($result) > 0 ) {
                 // Saved User data session
-                Session::put('userdata', $result[0]);
+                $userdata = $result[0];
+                Session::put('userdata', $userdata);
+                Common::add_audit_log($userdata->user_id, "Login", "User Login", "creds/login");
                 // Redirect to dashboard
-                return Redirect::to('/');
+                $return = Redirect::to('/');
             } else {
-                return Redirect::to('creds/login')->with('messageText','Invalid Username/Password.');
+                $return = Redirect::to('creds/login')->with('messageText','Invalid Username/Password.');
             }
         } catch (Exception $exc) {
-            return Redirect::to('creds/login')->with('messageText',$exc->getMessage());
+            
         }
+        return $return;
     }
     
     public function logout(){
-        
+        try {
+            $hasLoggedIn = Session::has('userdata');
+            if ( $hasLoggedIn ) {
+                $userdata = Session::get('userdata');
+                Common::add_audit_log($userdata->user_id, "Login", "User Logout", "creds/login");
+                Session::flush();
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return Redirect::to('creds/login');
     }
     
     public function edit_user() {

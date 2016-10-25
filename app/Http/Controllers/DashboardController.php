@@ -12,7 +12,13 @@ class DashboardController extends Controller {
 
 	public function showDashboard()
 	{
-
-		return view('admin.dashboard');
+            $return = "";
+                $hasLoggedIn = Session::has('userdata');
+                if ( $hasLoggedIn ) {
+                    $return = view('admin.dashboard');
+                } else {
+                    $return = Redirect::to('creds/login');
+                }
+            return $return;
 	}
 }

@@ -135,7 +135,7 @@
                         </li>
                         <hr/>
                         <li>
-                            <a href="{{ url('auth/logout') }}"><i class="fa fa-sign-out fa-fw"></i> 
+                            <a href="{{ url('creds/logout') }}"><i class="fa fa-sign-out fa-fw"></i> 
                                 Logout
                             </a>
                         </li>

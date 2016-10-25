@@ -38,13 +38,16 @@ Route::get('admin/auditlogs', 'AuditlogsController@showIndex');
 Route::group(['prefix' => 'creds'], function () {
     Route::get('login', 'APICredentialController@show_login');
     
-    
     /* 
      * @params for creds/login
      * username => Username of the user
      * password => Password of the user
      */
     Route::post('login', 'APICredentialController@login');
+    /* 
+     * @params for creds/logout
+     */
+    Route::get('logout', 'APICredentialController@logout');
     /*
      *  @params for creds/edit_user
      *  'username'      => Username of the user,
