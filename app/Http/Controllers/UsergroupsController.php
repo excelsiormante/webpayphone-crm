@@ -23,7 +23,18 @@ class UsergroupsController extends Controller
 
      public function showIndex()
     {
-        return view('admin.usergroups');
+        try {
+            $data = array();
+            $query = "SELECT *  FROM pgc_halo.fn_get_user_types()
+                      RESULT (user_type_id integer, user_type varchar);";
+            $result = DB::select($query);
+            if ( count($result) > 0 ) {
+                
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return view('admin.usergroups', $data);
     }
 
     /**
@@ -33,23 +44,34 @@ class UsergroupsController extends Controller
      */
     public function store()
     {
-
-        /*
-        $admin_id = Session::get('aid', 'default');
-        $action = 'Added a plan "' . Request::input('plan_name') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        
-
-
-        $subscriber = new User(Request::all());
-        $subscriber->setConnection('pgsql2');
-        $subscriber->save();
-
-        return $subscriber; */
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_add_admin_user_type(?,?) as is_added;";
+            $groupname = Input::get('groupname');
+            $description = Input::get('description');
+            $values = array($groupname, $description);
+            $result = DB::select($query, $values);
+            if ( $result->is_added == "t" ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "User Group successfully added."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "User Group already exist."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
     }
 
     /**
