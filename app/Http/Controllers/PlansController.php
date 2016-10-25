@@ -17,44 +17,52 @@ class PlansController extends Controller
 
     public function index()
     {
-        $data = Plan::all();
-
-        foreach($data as $key => $datum)
-        {
-            $seconds = floor($datum['airtime_duration'] % 60);
-            $total = floor($datum['airtime_duration'] / 60);
-            $minutes = floor($total % 60);
-            $total = floor($total/60);
-            $hours = floor($total % 24);
-            $days = floor($total / 24);
-            $data[$key]['airtime_days'] = $days;
-            $data[$key]['airtime_hours'] = $hours;
-            $data[$key]['airtime_minutes'] = $minutes;
-            $data[$key]['airtime_seconds'] = $seconds; 
-
-            $seconds = floor($datum['plan_duration'] % 60);
-            $total = floor($datum['plan_duration'] / 60);
-            $minutes = floor($total % 60);
-            $total = floor($total/60);
-            $hours = floor($total % 24);
-            $days = floor($total / 24);
-            $data[$key]['plan_days'] = $days;
-            $data[$key]['plan_hours'] = $hours;
-            $data[$key]['plan_minutes'] = $minutes;
-            $data[$key]['plan_seconds'] = $seconds; 
-
+        $plans = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_products()
+                      RESULT (product_id integer, code varchar, name varchar, description varchar, price float, product_type varchar, call_duration integer, nominations integer, plan_duration integer, status integer);";
+            $result = DB::select($query);
+            if ( count($result) > 0 ) {
+                foreach ($result as $value) {
+                    $call_duration_total = floor($value['call_duration'] / 60);
+                    $call_duration_minutes = floor($call_duration_total % 60);
+                    $call_duration_hours = floor($call_duration_total % 24);
+                    $call_duration_days = floor($call_duration_total / 24);
+                    
+                    $plan_duration_total = floor($value['call_duration'] / 60);
+                    $plan_duration_minutes = floor($plan_duration_total % 60);
+                    $plan_duration_hours = floor($plan_duration_total % 24);
+                    $plan_duration_days = floor($plan_duration_total / 24);
+                    
+                    
+                    $plan = array(
+                                'id'              => $value->product_id,
+                                'code'            => $value->code,
+                                'name'            => $value->name,
+                                'description'     => $value->description,
+                                'type'            => $value->product_type,
+                                'nominations'     => $value->status,
+                                'price'           => $value->price,
+                                'airtime_days'    => $call_duration_days,
+                                'airtime_hours'   => $call_duration_hours,
+                                'airtime_minutes' => $call_duration_minutes,
+                                'plan_days'       => $plan_duration_days,
+                                'plan_hours'      => $plan_duration_hours,
+                                'plan_minutes'    => $plan_duration_minutes
+                            );
+                    array_push($plans, $plan);
+                }
+            }
+        } catch (Exception $exc) {
+            
         }
-
-        return json_encode($data);
+        return json_encode($plans);
     }
 
     
     public function showIndex()
     {
-        
-            $plans = Plan::all();
-            return view('admin.plans')
-                ->with('plans', $plans);
+        return view('admin.plans');
     }
 
     /**

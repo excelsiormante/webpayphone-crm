@@ -14,16 +14,52 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $data = User::all();
-        return json_encode($data);
+    public function index(){
     }
 
 
-     public function showIndex()
-    {
-            return view('admin.permissions');
+    public function showIndex(){
+        $permissions = array();
+        $usergroups  = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_user_types()
+                      RESULT (user_type_id integer, user_type varchar, description varchar, status integer);";
+            $result = DB::select($query);
+            if ( count($result) > 0 ) {
+                foreach ($result as $value) {
+                    if ( $value->status === config('constants.STATUS_ACTIVE') ) {
+                        $usergroup = array(
+                                        'id'        => $value->user_type_id,
+                                        'groupname' => $value->user_type
+                                    );
+                        array_push($usergroups, $usergroup);
+                    }
+                }
+            }
+            
+            $query = "SELECT * FROM pgc_halo.fn_get_permissions(?)
+                      RESULT (user_type_id integer, module_name varchar, permission varchar, is_valid boolean);";
+            
+            $value = array(1);
+            $result = DB::select($query,$value);
+            if ( count($result) > 0 ) {
+                foreach ($result as $value) {
+                    $permission = array(
+                                    'permission' => $value->permission,
+                                    'is_valid'   => $value->is_valid
+                                );
+                    if ( !isset($permissions[$value->module_name]) ) {
+                        $permissions[$value->module_name] = array();
+                    }
+                    array_push($permissions[$value->module_name], $permission);
+                }
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return view('admin.permissions')
+                ->with('permissions', $permission)
+                ->with('usergroups', $usergroups);
     }
 
     /**

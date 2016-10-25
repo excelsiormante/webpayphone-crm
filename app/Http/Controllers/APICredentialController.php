@@ -33,8 +33,8 @@ class APICredentialController extends Controller {
             if ( count($result) > 0 ) {
                 // Saved User data session
                 $userdata = $result[0];
-                Session::put('userdata', $userdata);
                 Common::add_audit_log($userdata->user_id, "Login", "User Login", "creds/login");
+                Session::put('userdata', $userdata);
                 // Redirect to dashboard
                 $return = Redirect::to('/');
             } else {

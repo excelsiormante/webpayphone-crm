@@ -16,33 +16,32 @@ class UsergroupsController extends Controller
      */
     public function index()
     {
-        /* $data = User::on('pgsql2')->get();
-        return json_encode($data); */
-    }
-
-
-     public function showIndex()
-    {
+        $usergroups = array();
         try {
-            $data = array();
             $query = "SELECT * FROM pgc_halo.fn_get_user_types()
                       RESULT (user_type_id integer, user_type varchar, description varchar, status integer);";
             $result = DB::select($query);
             if ( count($result) > 0 ) {
-                $usergroups = array();
                 foreach ($result as $value) {
                     $usergroup = array(
-                                    'group_id'    => $value->user_type_id,
-                                    'usergroup'   => $value->user_type,
+                                    'id'    => $value->user_type_id,
+                                    'groupname'   => $value->user_type,
                                     'description' => $value->description,
                                     'status'      => $value->status
                                 );
+                    array_push($usergroups, $usergroup);
                 }
             }
         } catch (Exception $exc) {
             
         }
-        return view('admin.usergroups', $data);
+        return json_encode($usergroups);
+    }
+
+
+     public function showIndex()
+    {
+        return view('admin.usergroups');
     }
 
     /**
@@ -57,10 +56,10 @@ class UsergroupsController extends Controller
                     "message" => ""
                 );
         try {
-            $query = "SELECT pgc_halo.fn_add_admin_user_type(?,?) as is_added;";
+            $query = "SELECT pgc_halo.fn_add_admin_user_type(?,?,?,?) as is_added;";
             $groupname = Input::get('groupname');
             $description = Input::get('description');
-            $values = array($groupname, $description);
+            $values = array($groupname, $description, 0, 0);
             $result = DB::select($query, $values);
             if ( $result[0]->is_added === TRUE ) {
                 $return = array(
@@ -90,10 +89,25 @@ class UsergroupsController extends Controller
      */
     public function show($id) 
     {
-       /* $subscriber = User::on('pgsql2')->find($id);
-        
-        
-        return $subscriber; */
+        $usergroup = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_user_type(?)
+                      RESULT (user_type_id integer, user_type varchar, description varchar, status integer);";
+            $values = array((int)$id);
+            $result = DB::select($query,$values);
+            if ( count($result) > 0 ) {
+                $usergroup = array(
+                                'id'          => $result[0]->user_type_id,
+                                'groupname'   => $result[0]->user_type,
+                                'description' => $result[0]->description,
+                                'status'      => $result[0]->status
+                            );
+                
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return json_encode($usergroup);
     }
 
     /**
@@ -104,7 +118,35 @@ class UsergroupsController extends Controller
      */
     public function update($id)
     {
-        
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_add_admin_user_type(?,?,?,?) as is_added;";
+            $groupname   = Input::get('groupname');
+            $description = Input::get('description');
+            $status      = Input::get('status');
+            $values = array($groupname, $description, (int)$id, $status);
+            $result = DB::select($query, $values);
+            if ( $result[0]->is_added === TRUE ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "User Group successfully updated."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "User Group update failed."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
     }
 
     /**
@@ -115,6 +157,6 @@ class UsergroupsController extends Controller
      */
     public function destroy($id)
     {
-       /* User::on('pgsql2')->destroy($id); */
+       
     }
 }

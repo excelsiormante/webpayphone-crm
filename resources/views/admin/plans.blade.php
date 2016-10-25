@@ -17,7 +17,7 @@
     <script src="{{ asset('js/showtabledata.js') }}"></script>
 
     <br>
-	<div ng-app="unitScorecardApp" ng-controller="APIPlansController">
+	<div ng-app="unitScorecardApp" ng-controller="PlansController">
 	    <div class="wrap">
 		    <div class="row">			
 				<div class="col-lg-12">
