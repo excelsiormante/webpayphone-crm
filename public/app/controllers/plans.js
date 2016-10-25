@@ -1,4 +1,4 @@
-app.controller('APIPlansController', function($scope, $http, $interval) {
+app.controller('PlansController', function($scope, $http, $interval) {
 
 	$scope.plans = [];
 	$scope.loading = true;

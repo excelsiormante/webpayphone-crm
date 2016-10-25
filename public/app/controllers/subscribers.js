@@ -1,4 +1,4 @@
-app.controller('APISubscribersController', function($scope, $http, $interval) {
+app.controller('SubscribersController', function($scope, $http, $interval) {
 
 	$scope.subscribers = [];
 	$scope.loading = true;

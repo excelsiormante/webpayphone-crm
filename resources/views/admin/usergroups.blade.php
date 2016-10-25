@@ -17,7 +17,7 @@
     <script src="{{ asset('js/showtabledata.js') }}"></script>
 
     <br>
-	<div ng-app="unitScorecardApp" ng-controller="APIUsergroupsController">
+	<div ng-app="unitScorecardApp" ng-controller="UsergroupsController">
 	    <div class="wrap">
 		    <div class="row">			
 				<div class="col-lg-12">
@@ -71,6 +71,10 @@
                                             Group Name
                                         </td>
 
+                                        <td class="usergroup-description">
+                                            Description
+                                        </td>
+
                                         <td class="usergroup-status">
                                             Status
                                         </td>
@@ -85,6 +89,10 @@
 
     									<td>
                                             <% usergroup.groupname %>
+                                        </td>
+
+                                        <td>
+                                            <% usergroup.description %>
                                         </td>
 
                                         <td>
@@ -146,13 +154,30 @@
                                     </td>
                                 </tr>
 
+
+                                <tr>
+                                    <td class="col-md-4 mod">
+                                        <label for="email" class="control">Description</label>
+                                    </td>
+                                    <td class="col-md-8">
+                                        <input type='text' id="id_description" name="description" value="<% usergroup.description %>" ng-model="usergroup.description" autocomplete="off" class="form-control" required ng-touched />
+                                    <span class="help-inline" ng-show="userForm.description.$invalid">Description is required.</span>
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <td class="col-md-4 mod">
                                         <label for="email" class="control">Status</label>
                                     </td>
                                     <td class="col-md-8">
-                                        <input type='text' id="id_status" name="status" value="<% usergroup.status %>" ng-model="usergroup.status" autocomplete="off" class="form-control" required ng-touched />
-                                    <span class="help-inline" ng-show="userForm.status.$invalid">Status is required.</span>
+                                        <select id="id_status" name="status" data-ng-model="plan.status" class="form-control" required ng-touched>
+                                                    <option value="Active">
+                                                        Active
+                                                    </option>
+                                                    <option value="Inactive">
+                                                        Inactive
+                                                    </option>
+                                        </select>
                                     </td>
                                 </tr>
 

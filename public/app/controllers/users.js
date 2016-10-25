@@ -1,4 +1,4 @@
-app.controller('APIUsersController', function($scope, $http, $interval) {
+app.controller('UsersController', function($scope, $http, $interval) {
 
 	$scope.users = [];
 	$scope.loading = true;

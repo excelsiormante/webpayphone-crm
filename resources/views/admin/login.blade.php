@@ -72,7 +72,9 @@
 
     <form class="form-horizontal" role="form" method="POST" action="{{url('creds/login')}}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+    @if (Session::has('messageText'))
+        <div class="alert alert-warning">{{ Session::get('messageText') }}</div>
+    @endif
     <div class="form-group animated fadeInLeft delayp1">
         <label class="col-md-4 control-label">Username</label>
         <div class="col-md-6">

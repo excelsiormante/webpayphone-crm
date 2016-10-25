@@ -1,4 +1,4 @@
-app.controller('APIUsergroupsController', function($scope, $http, $interval) {
+app.controller('UsergroupsController', function($scope, $http, $interval) {
 
 	$scope.usergroups = [];
 	$scope.loading = true;
@@ -32,6 +32,7 @@ app.controller('APIUsergroupsController', function($scope, $http, $interval) {
 
             $http.put(url, {
                 groupname: $scope.usergroup.groupname,
+                description: $scope.usergroup.description,
                 status:  $scope.usergroup.status,
 
             }).success(function(data, status, headers, config, response) {
@@ -46,6 +47,7 @@ app.controller('APIUsergroupsController', function($scope, $http, $interval) {
         {
             $http.post(url, {
                 groupname: $scope.usergroup.groupname,
+                description: $scope.usergroup.description,
                 status:  $scope.usergroup.status,
 
             }).success(function(data, status, headers, config, response) {
@@ -67,7 +69,8 @@ app.controller('APIUsergroupsController', function($scope, $http, $interval) {
             case 'add':
                 $scope.form_title = "ADD USER GROUP";
                 document.getElementById('id_groupname').value = "";
-                document.getElementById('id_status').value = "";
+                document.getElementById('id_description').value = "";
+                document.getElementById('id_status').value = "Active";
               
                 break;
             case 'edit':
