@@ -1,0 +1,483 @@
+@font-face {
+    font-family: ubuntu;
+    src: url('../fonts/Ubuntu-R.ttf');
+}
+
+@font-face {
+    font-family: Orbitron;
+    src: url('../fonts/orbitron-medium.otf');
+}
+
+/* font import */
+
+body, h1, h3, h4, h5, h6, table
+{
+    font-family: 'ubuntu';
+}
+
+thead{
+    text-align: center;
+}
+
+body.modal-open .wrap{
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+    /* blur modal on show */
+}
+
+.navbar-default .navbar-toggle:focus, 
+.navbar-default .navbar-toggle,
+.navbar-default .navbar-toggle:hover{
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+    color: transparent !important;
+}
+
+a.navbar-brand.layout-custom-pnpname:link,
+a.navbar-brand.layout-custom-pnpabb:link,
+a.navbar-brand.layout-custom-pnpname:hover,
+a.navbar-brand.layout-custom-pnpabb:hover,
+a.navbar-brand.layout-custom-pnpname:visited,
+a.navbar-brand.layout-custom-pnpabb:visited{
+    color:#fff;
+}
+
+/* .thumbnail:hover {
+    position:relative;
+    top:0em;
+    height: 150px;
+}
+*/
+#tabledata{
+    display: none;
+}
+#information{
+    display: none;
+}
+#tableinfo{
+    display: none;
+}
+#reportbutton{
+    display: none;
+}
+#pagina{
+    display: none;
+}
+
+
+
+/* layout css */
+@media (min-width: 768px){
+    a.navbar-brand.layout-custom-pnpabb,
+    .nav>li.layout-custom-usernavoptions{
+        display: none;
+    }
+    #page-wrapper{
+        margin-left: 251px;
+    }
+    .sidebar{
+        position: fixed;
+        z-index: 999;
+    }
+}
+
+@media (max-width: 768px){
+    a.navbar-brand.layout-custom-pnpname,
+    .layout-custom-navbrand{
+        display: none;
+    }
+    .sidebar-search{
+        margin-top: 5.5em;
+    }
+    .alert-info{
+        text-align: left !important;
+    }
+    .emptyspace{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .table-responsive>.table>tbody>tr>td{
+        white-space: pre-line;
+        word-wrap:break-word;
+        text-align: left;
+    }
+    .scorecard-minilabel{
+        margin-top: .5em;
+    }
+}
+#pst{
+    color:white;
+    text-transform: capitalize;
+    text-align: center;
+}
+#clockbox{
+    color:white;
+    font-size: 2em;
+    text-align: center;
+}
+#datebox{
+    color:white;
+    font-size: 1em;
+    text-align: center;
+}
+/* /. layout css */
+
+
+/* dashboard css */   
+/*.dashboard-custom-dashabb,
+.dashboard-custom-dashname{
+    box-shadow: 8px 8px 5px #888888;
+}*/
+
+@media (min-width: 768px){
+    .dashboard-custom-dashabb{
+        display: none;
+    }
+    .dashboard-custom-dashname{
+        padding: 1em;
+        color:#8a6d3b;
+        font-size: 250%;
+        margin-top:1.7em;
+        text-align: center;
+        background-color: #fcf8e3;
+    }
+    .dashboard-custom-picture{
+        height:200px; 
+        width:200px;
+        margin-top: 2em !important;
+        margin-bottom: 1.5em;
+    }
+}
+
+@media (max-width: 768px){
+    .dashboard-custom-dashname,
+    .dashboard-custom-picture{
+        display: none;
+    }
+    .dashboard-custom-dashabb{
+        padding: 1em;
+        color:#8a6d3b;
+        font-size: 250%;
+        margin-top:1.7em;
+        text-align: center;
+        background-color: #fcf8e3;
+    }
+    .dashboard-custom-pictureabb{
+        display: inline !important;
+        height: 3em;
+        width: 3em;
+        margin-bottom: .5em;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1200px){
+    .dashboard-custom-picture{
+        height:200px; 
+        width:200px;
+        margin-top: -1em !important;
+        margin-bottom: 1.5em;
+    }
+}
+/* /. dashboard css */
+
+
+/*  css for scorecard */
+@media (min-width: 768px){
+    .scorecard-custom-panel{
+        margin-top: 4.5em;
+    }
+    .unitdashboard-custom-picabb{
+        height:200px; 
+        width:200px;
+        margin-bottom: 1.5em;
+    }
+    button.btn-generate{
+        margin-right:0em;
+    }
+}
+@media (max-width: 768px){
+    .scorecard-custom-panel{
+        margin-top: 6.5em;
+        
+    }
+    .unitdashboard-custom-picabb{
+        display: inline !important;
+        height:10em; 
+        width:10em;
+        margin-top: 2em;
+    }
+    button.btn-generate{
+        margin-top:5em;
+    }
+    .scorecard-custom-heading{
+        padding-bottom: .75em;
+        text-align: center;
+    }
+}
+
+.custom_scorecard-info{
+    font-size:12px; 
+    text-align:left;
+}
+
+.scorecard-objectives{
+    width:20em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+.scorecard-owner,
+.scorecard-initiatives{
+    width:17em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center !important;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+.scorecard-action{
+    width:8em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+.scorecard-type{
+    text-align: center;
+}
+.scorecard-month{
+    width:10em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center;
+}
+.scorecard-input-month{
+    width:4.5em;   
+    text-align:center;
+}
+.scorecard-input-estimate,
+.scorecard-input-actual,
+.scorecard-input-variance{
+    width:10em;  
+}
+.scorecard-name{
+    width:20em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center;
+}
+.scorecard-estimate,
+.scorecard-actual,
+.scorecard-variance{
+    width:10em; 
+    border-color:transparent; 
+    background-color:transparent;  
+    text-align:center;
+}
+.scorecard-objective{
+    vertical-align: middle !important;
+}
+.table>tbody>tr>td{
+    vertical-align: middle;
+}
+.table-bordered>thead>tr>td{
+    border-bottom-width: 1px; 
+}
+table {
+    border: 0px !important;
+}
+
+
+/*  /.css for scorecard */
+
+
+/*  css for objectives */
+@media (min-width: 768px){
+    .objectives-custom-panel{
+        margin-top: 3em;
+    }
+}
+@media (max-width: 768px){
+    .objectives-custom-panel{
+        margin-top: 5em;
+        text-align: center;
+    }
+}
+/*  /.css for objectives */
+
+
+/*  css for measures */
+@media (min-width: 768px){
+    .measures-custom-panel{
+        margin-top: 3em;
+    }
+}
+@media (max-width: 768px){
+    .measures-custom-panel{
+        margin-top: 5em;
+        text-align: center;
+    }
+}
+/*  /.css for measures */
+
+
+/*  css for targets */
+@media (min-width: 768px){
+    .targets-custom-panel{
+        margin-top: 4.5em;
+    }
+    .target_size{
+        width: 11em;
+        margin:0px !important;
+    }
+
+}
+@media (max-width: 768px){
+    .targets-custom-panel{
+        margin-top: 6.5em;
+        text-align: center;
+    }
+    .target_size{
+        width: 11em;
+        margin:0px !important;
+        text-align: center !important;
+    }
+
+}
+
+.target-month{
+    width:8em; 
+}
+.chief_target-objective{
+    width: 25%;
+}
+.chief_target-measure{
+    width: 25%;
+}
+.chief_target-formula{
+    width: 5%;
+}
+.chief_target-target{
+    width: 5%;
+}
+.chief_target-action{
+    width: 5%;
+}
+.chief_target-date{
+    width: 10%;
+}
+
+
+/*  /.css for targets */
+
+
+
+/*  css for audit trails  */
+@media (min-width: 768px){
+    .dashboard-custom-activitylogabb{
+        display: none;
+    }
+    .dashboard-custom-activitylogname{
+        font-size: 250%;
+        padding-top:1.5em;
+        padding-bottom: 1em;
+        text-align: center;
+        color:#8a6d3b;
+        background-color: #fcf8e3;
+    }
+    .audit-custom-panel{
+        margin-top:3em;
+    }
+}
+
+@media (max-width: 768px){
+    .dashboard-custom-activitylogname{
+        display: none;
+    }
+    .dashboard-custom-activitylogabb{
+        font-size: 250%;
+        padding-top:1.5em;
+        padding-bottom: 1em;
+        text-align: center;
+        color:#8a6d3b;
+        background-color: #fcf8e3;
+    }
+    .audit-custom-panel{
+        margin-top: 5em;
+        text-align: center;
+    }
+}
+.audit-encoder{
+    width: 20%;
+}
+.audit-action{
+    width: 70%;
+}
+.aduti-time{
+    width: 10%;
+}
+/*  /.css for audit trails  */
+
+/*  change picture */
+@media (min-width: 768px){
+    .custom_picture-space{
+        margin-top: 10em;
+    }
+}
+/*  /.change picture */
+
+
+/*  css for modal */
+.close {
+    font-size: 50px;
+    display:block;
+}
+
+.modal-body table tr td{             
+    border-top: none !important;
+}
+
+.modal-backdrop{
+     background-color:rgba(54, 54, 54, 1);
+}
+.mod{
+    text-align: left !important;
+    /* modal text alignment */
+}
+/* /.css for modal */
+
+
+/* scroll bar plug-in */
+::-webkit-scrollbar {
+    width: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: rgba(36,36,36,.5); 
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); */
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(36,36,36,.1); 
+}
+/* /.scroll bar plug-in */
+
+
+/* Removes border radius */
+* {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
+/* /.Removes border radius */

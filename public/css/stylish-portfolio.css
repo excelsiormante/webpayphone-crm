@@ -1,0 +1,171 @@
+@font-face {
+    font-family: ubuntu;
+    src: url('../fonts/Ubuntu-R.ttf');
+}
+
+@font-face {
+    font-family: Orbitron;
+    src: url('../fonts/orbitron-medium.otf');
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: ubuntu;
+}
+
+#secondScreen{
+    display: none;
+}
+#secondScreen{
+    margin-top: 8em;
+}
+#firstScreen{
+    margin-top: 1.5em;
+
+}
+@media (max-width: 768px){
+    #secondScreen{
+        margin-top: 3em;
+    }
+}
+
+
+@media (min-width: 992px){
+    .image_big{
+        display: block;
+    }
+    .image_small{
+        display: none;
+    }
+}
+@media (max-width: 991px){
+    .image_big{
+        display: none;
+    }
+    .image_small{
+        display: block;
+    }
+}
+
+
+.header {
+    display: table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url(../img/bg.jpg) no-repeat center center scroll;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+.text-vertical-center {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
+/* yujin css */
+
+
+.welcome-stylish-badge,
+.welcome-stylish-password{
+    font-size: 1.5em;
+    height: 2em;
+    text-align: center;
+}
+
+.welcome-stylish-container{
+    margin-top: 50px;
+}
+
+.welcome-stylish-instruction{
+    font-size: 1.3em;
+    padding-top:10px;
+}
+
+.welcome-stylish-objective,
+.welcome-style-get-started{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px !important;
+    margin-bottom: 2em;
+}
+
+.welcome-stylish-title,
+.welcome-stylish-login-title{
+    font-family: 'Orbitron', sans-serif;
+    
+}
+
+.welcome-stylish-logo-one,
+.welcome-stylish-logo-two{
+    height:300px;
+}
+
+.welcome-stylish-message{
+    text-align: center;
+}
+
+@media(max-width:768px){
+    .welcome-stylish-title,
+    .welcome-stylish-login-title{
+        font-size: 30px !important;
+    }
+    .welcome-stylish-logo-one,
+    .welcome-stylish-logo-two{
+        height:250px !important;
+    }
+}
+
+.btn-dark {
+    border-radius: 0;
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active {
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.text-vertical-center h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 4.5em;
+    font-weight: 700;
+}
+
+/* scroll bar plug-in */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: rgba(36,36,36,.5); 
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); */
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(36,36,36,.1); 
+}
+
+* {
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
+

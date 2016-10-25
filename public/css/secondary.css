@@ -1,0 +1,157 @@
+/* secondary CSS */
+
+.secondary-page-wrapper{
+    background-color: rgba(240,248,255,1) !important;
+    border-color: rgba(240,248,255,1) !important;
+}
+
+/* css for layout */
+@media(max-width:768px){
+    .layout-custom-username{
+        text-align: center;
+        padding-left: 12px;
+        background-color:#fff;
+        padding: 5px;
+        color:#082A48;
+        border-color:#082A48;
+    }
+}
+@media(min-width:768px){
+    .layout-custom-username{
+        display: none;
+    }
+}
+.layout-title-navbar{
+    margin-bottom: -3em; 
+    background-color:rgba(40, 114, 84, 1);
+    border-bottom-color:rgba(40, 114, 84, 1);
+}
+.sidebar-search{
+    background-color:rgba(40, 114, 84, 1) !important;
+}
+.layout_secondary-body{
+    background-color: rgba(40, 114, 84, 1);
+}
+.dropdown-menu>li>a{
+    color:#2A363B !important;
+}
+.dropdown-menu>li>a:hover{
+    color:#fff !important;
+    background-color:rgba(40, 114, 84, 1) !important;
+}
+a.layout-custom-navbaruser{
+    background-color:rgba(40, 114, 84, 1);
+    color:#fff;
+    border-color:rgba(40, 114, 84, 1);
+}
+a.layout-custom-navbaruser:hover{
+    color:rgba(40, 114, 84, 1);
+    background-color:#fff !important;
+}
+.sidebar ul li a.active{
+    color: rgba(40, 114, 84, 1) !important;
+}
+a.active{
+    background-color:rgba(240,248,255,1) !important;
+    color:rgba(40, 114, 84, 1) !important;
+}
+.nav>li>a{
+    background-color:rgba(40, 114, 84, 1);
+    color:#fff !important;
+}
+.nav>li>a:focus, 
+.nav>li>a:hover{
+    color:rgba(40, 114, 84, 1) !important;
+    background-color: #fff;
+}
+.sidebar ul li{
+    border-bottom: none;
+}
+.sidebar-search{
+    background-color: #fff;
+}
+
+/* /.css for layout */
+
+
+/* css for secondary objectives */
+@media screen and (max-width: 767px){
+    .table-responsive>.table>tbody>tr>td{
+        white-space: inherit !important;
+    }
+    .objective-info-name{
+        display: none;
+    }
+}
+@media screen and (min-width: 767px){
+    .objective-info-abb{
+        display: none;
+    }
+}
+}
+.secondary_objective-name{
+    width: 30%;
+}
+.secondary_objective-perspective{
+    width: 20%;
+}
+.secondary_objective-contributory{
+    width: 30%;
+}
+.secondary_objective-encoder{
+    width: 15%;
+}
+.secondary_objective-edit{
+    width: 5%;
+}
+/* ./css for secondary objectives */
+
+
+/* css for secondary measures */
+.secondary_measure-name{
+    width: 25%;
+}
+.secondary_measure-type{
+    width: 5%;
+}
+.secondary_measure-formula{
+    width: 5%;
+}
+.secondary_measure-objective{
+    width: 25%;
+}
+.secondary_measure-contributory{
+    width: 20%;
+}
+.secondary_measure-encoder{
+    width: 25%;
+}
+.secondary_measure-edit{
+    width: 5%;
+}
+/* /.css for cheif measures */
+
+
+/* css for table */
+thead{
+    background-color:rgba(40, 114, 84, 1);
+    color: #fff;
+}
+thead>tr>td{
+    vertical-align: middle !important;
+}
+tr:hover{
+    background-color:rgba(40, 114, 84, 0.1);
+    
+}
+/* /.css for table */
+
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); 
+    -webkit-border-radius: 0px;
+    background-color:rgba(226, 226, 226, 1);
+    border-radius: 0px;
+}
+
