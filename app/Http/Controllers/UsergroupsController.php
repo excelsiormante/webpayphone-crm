@@ -25,11 +25,19 @@ class UsergroupsController extends Controller
     {
         try {
             $data = array();
-            $query = "SELECT *  FROM pgc_halo.fn_get_user_types()
-                      RESULT (user_type_id integer, user_type varchar);";
+            $query = "SELECT * FROM pgc_halo.fn_get_user_types()
+                      RESULT (user_type_id integer, user_type varchar, description varchar, status integer);";
             $result = DB::select($query);
             if ( count($result) > 0 ) {
-                
+                $usergroups = array();
+                foreach ($result as $value) {
+                    $usergroup = array(
+                                    'group_id'    => $value->user_type_id,
+                                    'usergroup'   => $value->user_type,
+                                    'description' => $value->description,
+                                    'status'      => $value->status
+                                );
+                }
             }
         } catch (Exception $exc) {
             
@@ -96,24 +104,7 @@ class UsergroupsController extends Controller
      */
     public function update($id)
     {
-
-        /*
-        $subscriber = User::on('pgsql2')->find($id);
-        $subscriber->update(Request::all());
-        $subscriber->save();
- 
         
-        $chief_id = Session::get('chief_user_id', 'default');
-        $chief = Request::input('ChiefID');
-        $action = 'Updated an Objective: "' . Request::input('ChiefObjectiveName') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        
-
-        return $subscriber;*/
     }
 
     /**
