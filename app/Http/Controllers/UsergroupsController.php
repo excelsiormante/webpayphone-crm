@@ -62,7 +62,7 @@ class UsergroupsController extends Controller
             $description = Input::get('description');
             $values = array($groupname, $description);
             $result = DB::select($query, $values);
-            if ( $result->is_added == "t" ) {
+            if ( $result[0]->is_added === TRUE ) {
                 $return = array(
                     "result"  => config('constants.RESULT_SUCCESS'),
                     "message" => "User Group successfully added."
