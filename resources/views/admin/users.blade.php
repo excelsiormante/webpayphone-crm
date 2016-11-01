@@ -17,7 +17,7 @@
     <script src="{{ asset('js/showtabledata.js') }}"></script>
 
     <br>
-    <div ng-app="unitScorecardApp" ng-controller="APIUsersController">
+    <div ng-app="unitScorecardApp" ng-controller="UsersController">
         <div class="wrap">
             <div class="row">           
                 <div class="col-lg-12">
@@ -67,7 +67,7 @@
                             <div class="table-responsive" ng-show="info" id="tabledata">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <td class="user-name">
+                                        <td class="user-fullname">
                                             Name
                                         </td>
 
@@ -75,14 +75,18 @@
                                             E-mail
                                         </td>
 
-                                        <td class="user-password">
-                                            Password
+                                        <td class="user-username">
+                                            Username
                                         </td>
 
-                                        <td class="user-join">
-                                            Join date
+                                        <td class="user-usergroup">
+                                            User Group
                                         </td>
                                         
+                                        <td class="user-status">
+                                            Status
+                                        </td>
+
                                         <td class="user-edit"></td>
                                     </thead>
                                     
@@ -92,18 +96,22 @@
                                         itemsPerPage:5'>
 
                                         <td>
-                                            <% user.name %>
+                                            <% user.fullname %>
                                         </td>
                                         <td>
                                             <% user.email %>
                                         </td>
 
                                         <td>
-                                            <% user.password %>
+                                            <% user.username %>
                                         </td>
 
                                         <td>
-                                            <% user.created_at %>
+                                            <% user.groupname %>
+                                        </td>
+
+                                        <td>
+                                            <% user.status == "1" ? "Active" : "Inactive"%>
                                         </td>
 
                                         <td>
@@ -156,8 +164,8 @@
                                         <label for="name" class="control">Name:</label>
                                     </td>
                                     <td class="col-md-8">
-                                        <input type='text' id="id_name" name="name" value="<% user.name %>" ng-model="user.name" autocomplete="off" class="form-control" required ng-touched />
-                                    <span class="help-inline" ng-show="userForm.name.$invalid">Name is required.</span>
+                                        <input type='text' id="id_fullname" name="fullname" value="<% user.fullname %>" ng-model="user.fullname" autocomplete="off" class="form-control" required ng-touched />
+                                    <span class="help-inline" ng-show="userForm.fullname.$invalid">Name is required.</span>
                                     </td>
                                 </tr>
 
@@ -174,11 +182,32 @@
 
                                 <tr>
                                     <td class="col-md-4 mod">
+                                        <label for="email" class="control">Username:</label>
+                                    </td>
+                                    <td class="col-md-8">
+                                        <input type='text' id="id_username" name="username" value="<% user.username %>" ng-model="user.username" class="form-control" autocomplete="off" required ng-touched />
+                                    <span class="help-inline" ng-show="userForm.username.$invalid">Username is required.</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="col-md-4 mod">
                                         <label for="email" class="control">Password:</label>
                                     </td>
                                     <td class="col-md-8">
-                                        <input type='text' id="id_password" name="password" value="<% user.password %>" ng-model="user.password" autocomplete="off" class="form-control" required ng-touched />
+                                        <input type='password' id="id_password" name="password" value="<% user.password %>" ng-model="user.password" autocomplete="off" class="form-control" required ng-touched />
                                     <span class="help-inline" ng-show="userForm.password.$invalid">Password is required.</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="col-md-4 mod">
+                                        <label for="usergroup" class="control">User group:</label>
+                                    </td>
+                                    <td class="col-md-8">
+                                        <select type="select" id="id_usergroup" name="usergroup" value="<%user.usergroup%>"  ng-model="user.groupname" class="form-control" ng-options="user.usergroup as user.groupname for user in users" required ng-touched>
+                                            <option value="">Select User group</option>
+                                        </select>
                                     </td>
                                 </tr>
 

@@ -20,23 +20,28 @@ class PlansController extends Controller
         $plans = array();
         try {
             $query = "SELECT * FROM pgc_halo.fn_get_products()
-                      RESULT (product_id integer, code varchar, name varchar, description varchar, price float, product_type varchar, call_duration integer, nominations integer, plan_duration integer, status integer);";
+                      RESULT (id integer, code varchar, name varchar, description text, price float, product_type varchar, call_duration varchar, nominations integer, plan_duration varchar, status integer);";
             $result = DB::select($query);
             if ( count($result) > 0 ) {
                 foreach ($result as $value) {
-                    $call_duration_total = floor($value['call_duration'] / 60);
-                    $call_duration_minutes = floor($call_duration_total % 60);
+                    $call_duration_total = $value->call_duration;
+                    $call_duration_total = $call_duration_total / 60;
+                    $call_duration_minutes = floor($call_duration_total % 60);   
+                    $call_duration_total = $call_duration_total / 60;
                     $call_duration_hours = floor($call_duration_total % 24);
                     $call_duration_days = floor($call_duration_total / 24);
+
                     
-                    $plan_duration_total = floor($value['call_duration'] / 60);
-                    $plan_duration_minutes = floor($plan_duration_total % 60);
+                    $plan_duration_total = $value->plan_duration;
+                    $plan_duration_total = $plan_duration_total / 60;
+                    $plan_duration_minutes = floor($plan_duration_total % 60);   
+                    $plan_duration_total = $plan_duration_total / 60;
                     $plan_duration_hours = floor($plan_duration_total % 24);
                     $plan_duration_days = floor($plan_duration_total / 24);
                     
                     
                     $plan = array(
-                                'id'              => $value->product_id,
+                                'id'              => $value->id,
                                 'code'            => $value->code,
                                 'name'            => $value->name,
                                 'description'     => $value->description,
@@ -73,22 +78,40 @@ class PlansController extends Controller
     public function store()
     {
 
-        /*
-        $admin_id = Session::get('aid', 'default');
-        $action = 'Added a plan "' . Request::input('plan_name') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        */
-
-        
-
-        $plan = new Plan(Request::all());
-        $plan->save();
-
-        return $plan;
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_edit_product(?,?,?,?,?,?,?,?,?) as is_added;";
+            $code = Input::get('code');
+            $name = Input::get('name');
+            $description = Input::get('description');
+            $price = Input::get('price');
+            $type = Input::get('type');
+            $call_duration = Input::get('airtime_duration');
+            $plan_duration = Input::get('plan_duration');
+            $nominations = Input::get('nominations');
+            $values = array($code, $name, $description, $price, $type, $call_duration, $plan_duration, $nominations, 0);
+            $result = DB::select($query, $values);
+            if ( $result[0]->is_added === TRUE ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "Plan successfully added."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "Plan already exist."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
     }
 
     /**
@@ -99,10 +122,29 @@ class PlansController extends Controller
      */
     public function show($id) 
     {
-        $plan = Plan::find($id);
-        
-        
-        return $plan;
+        $plan = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_products(?)
+                      RESULT (code varchar, name varchar, description varchar, price float, product_type varchar, call_duration integer, plan_duration integer, nominations integer);";
+            $values = array((int)$id);
+            $result = DB::select($query,$values);
+            if ( count($result) > 0 ) {
+                $plan = array(
+                                'code'          => $result[0]->code,
+                                'name'   => $result[0]->name,
+                                'description' => $result[0]->description,
+                                'price'      => $result[0]->price,
+                                'type'  => $result[0]->product_type,
+                                'airtime_duration' => $result[0]->call_duration,
+                                'plan_duration' => $result[0]->plan_duration,
+                                'nominations' => $result[0] ->nominations
+                            );
+                
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return json_encode($plan);
     }
 
     /**
@@ -113,25 +155,40 @@ class PlansController extends Controller
      */
     public function update($id)
     {
-
-
-        $plan = Plan::find($id);
-        $plan->update(Request::all());
-        $plan->save();
- 
-        /*
-        $chief_id = Session::get('chief_user_id', 'default');
-        $chief = Request::input('ChiefID');
-        $action = 'Updated an Objective: "' . Request::input('ChiefObjectiveName') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        */
-
-
-        return $plan;
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_edit_product(?,?,?,?,?,?,?,?,?) as is_added;";
+            $code = Input::get('code');
+            $name = Input::get('name');
+            $description = Input::get('description');
+            $price = Input::get('price');
+            $type = Input::get('type');
+            $call_duration = Input::get('airtime_duration');
+            $plan_duration = Input::get('plan_duration');
+            $nominations = Input::get('nominations');
+            $values = array($code, $name, $description, $price, $type, $call_duration, $plan_duration, $nominations, $id);
+            $result = DB::select($query, $values);
+            if ( $result[0]->is_added === TRUE ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "Plan successfully updated."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "Plan already exist."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
 
     }
 

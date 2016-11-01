@@ -38,6 +38,7 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 plan_duration:  $scope.plan.plan_duration,
                 nominations:  $scope.plan.nominations,
                 price:  $scope.plan.price,
+                name: $scope.plan.name,
 
             }).success(function(data, status, headers, config, response) {
                 console.log(response);
@@ -57,6 +58,7 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 plan_duration:  $scope.plan.plan_duration,
                 nominations:  $scope.plan.nominations,
                 price:  $scope.plan.price,
+                name: $scope.plan,name,
 
             }).success(function(data, status, headers, config, response) {
                 console.log(response);
@@ -83,6 +85,7 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 document.getElementById('id_plan_duration').value = "0";
                 document.getElementById('id_nominations').value = "";
                 document.getElementById('id_price').value = "";
+                document.getElementById('id_name').value = "";
               
                 break;
             case 'edit':

@@ -170,7 +170,7 @@
                                         <label for="email" class="control">Status</label>
                                     </td>
                                     <td class="col-md-8">
-                                        <select id="id_status" name="status" data-ng-model="plan.status" class="form-control" required ng-touched>
+                                        <select id="id_status" name="status" data-ng-model="usergroup.status" class="form-control" required ng-touched>
                                                     <option value="Active">
                                                         Active
                                                     </option>

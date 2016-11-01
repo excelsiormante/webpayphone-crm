@@ -196,6 +196,28 @@
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td class="col-md-4 mod">
+                                        <label for="code" 
+                                                class="control-label">Plan Name:
+                                        </label>
+                                    </td>
+                                    <td class="col-md-8">
+                                        <input type='text' 
+                                                id="id_name" 
+                                                name="name" 
+                                                value="<% plan.name %>" 
+                                                ng-model="plan.name" 
+                                                autocomplete="off" 
+                                                class="form-control" 
+                                                required ng-touched />
+                                        <span class="help-inline" 
+                                                ng-show="userForm.code.$invalid && !userForm.name.$pristine">
+                                            Plan Name is required.
+                                        </span>
+                                    </td>
+                                </tr>
+
                                  <tr>
                                     <td class="col-md-4 mod">
                                         <label for="description" 

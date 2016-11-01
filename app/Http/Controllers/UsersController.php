@@ -16,8 +16,29 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data = User::all();
-        return json_encode($data);
+         $users = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_admin_users()
+                      RESULT (id integer, username varchar, fullname varchar, usergroup integer , email varchar, status integer);";
+            $result = DB::select($query);
+            if ( count($result) > 0 ) {
+                foreach ($result as $value) {
+                    $user = array(
+                                    'id'    => $value->id,
+                                    'username'   => $value->username,
+                                    'fullname' => $value->fullname,
+                                    'usergroup' => $value->usergroup,
+                                    'email' => $value->email,
+                                    'status'      => $value->status
+                                );
+
+                    array_push($users, $user);
+                }
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return json_encode($result);
     }
 
 
@@ -33,23 +54,37 @@ class UsersController extends Controller
      */
     public function store()
     {
-
-        /*
-        $admin_id = Session::get('aid', 'default');
-        $action = 'Added a plan "' . Request::input('plan_name') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        */
-
-/*
-        $subscriber = new User(Request::all());
-        $subscriber->setConnection('pgsql2');
-        $subscriber->save();
-
-        return $subscriber; */
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_edit_admin_user(?,?,?,?,?,?,?) as is_added;";
+            $username = Input::get('username');
+            $fullname = Input::get('fullname');
+            $email = Input::get('email');
+            $usergroup = Input::get('usergroup');
+            $password = Input::get('password');
+            $values = array($password,$usergroup, $fullname, $username, $email, 0, 0);
+            $result = DB::select($query, $values);
+            if ( $result[0]->is_added === TRUE ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "User Group successfully added."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "User already exist."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
     }
 
     /**
@@ -60,10 +95,29 @@ class UsersController extends Controller
      */
     public function show($id) 
     {
-     /*   $subscriber = User::on('pgsql2')->find($id);
-        
-        
-        return $subscriber; */
+        $user = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_admin_user_desc(?)
+                      RESULT (id integer, username varchar, fullname varchar, usergroup integer , email varchar, status integer);";
+            $values = array((int)$id);
+            $result = DB::select($query,$values);
+            if ( count($result) > 0 ) {
+                    $user = array(
+                                    'id'    => $value->id,
+                                    'username'   => $value->username,
+                                    'fullname' => $value->fullname,
+                                    'usergroup' => $value->usergroup,
+                                    'email' => $value->email,
+                                    'status'      => $value->status
+                                );
+
+                    array_push($users, $user);
+                }
+            
+        } catch (Exception $exc) {
+            
+        }
+        return json_encode($result);  
     }
 
     /**
@@ -74,24 +128,38 @@ class UsersController extends Controller
      */
     public function update($id)
     {
-
-
-     /*   $subscriber = User::on('pgsql2')->find($id);
-        $subscriber->update(Request::all());
-        $subscriber->save();
- 
-        
-        $chief_id = Session::get('chief_user_id', 'default');
-        $chief = Request::input('ChiefID');
-        $action = 'Updated an Objective: "' . Request::input('ChiefObjectiveName') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        
-
-        return $subscriber; */
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL'),
+                    "message" => ""
+                );
+        try {
+            $query = "SELECT pgc_halo.fn_edit_admin_user(?,?,?,?,?,?,?) as is_added;";
+            $username   = Input::get('username');
+            $password = Input::get('password');
+            $email      = Input::get('email');
+            $fullname = Input::get('fullname');
+            $usergroup = Input::get('usergroup');
+            $status = Input::get('status');
+            $values = array($password,$usergroup, $fullname, $username, $email, (int)$id, 0);
+            $result = DB::select($query, $values);
+            if ( $result[0]->is_added === TRUE ) {
+                $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "User successfully updated."
+                );
+            } else {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => "User update failed."
+                );
+            }
+        } catch (Exception $exc) {
+                $return = array(
+                    "result" => config('constants.RESULT_ERROR'),
+                    "message" => $exc->getMessage()
+                );
+        }
+        echo json_encode($return);
     }
 
     /**
