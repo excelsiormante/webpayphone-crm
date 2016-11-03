@@ -47,7 +47,7 @@ app.controller('UsersController', function($scope, $http, $interval) {
                 email:  $scope.user.email,
                 username: $scope.user.username,
                 usergroup: $scope.user.usergroup,
-                password:  $scope.user.password,
+                status:  $scope.user.status
 
             }).success(function(data, status, headers, config, response) {
                 $('#myModal').modal('hide');
@@ -61,9 +61,9 @@ app.controller('UsersController', function($scope, $http, $interval) {
             $http.post(url, {
                 fullname: $scope.user.fullname,
                 email:  $scope.user.email,
-                password:  $scope.user.password,
                 username: $scope.user.username,
                 usergroup: $scope.user.usergroup,
+                status:  $scope.user.status
 
 
             }).success(function(data, status, headers, config, response) {
@@ -85,7 +85,6 @@ app.controller('UsersController', function($scope, $http, $interval) {
                 $scope.form_title = "ADD USER";
                 document.getElementById('id_fullname').value = "";
                 document.getElementById('id_email').value = "";
-                document.getElementById('id_password').value = "";
                 document.getElementById('id_username').value = "";
                 document.getElementById('id_usergroup').value = "";
               
@@ -95,7 +94,9 @@ app.controller('UsersController', function($scope, $http, $interval) {
                 $scope.id = id;
                 $http.get(public + 'api/users/' + id)
                         .success(function(response) {
-                            $scope.user = response;
+                            $scope.user       = response.data;
+                            $scope.statuses   = response.statuses;
+                            $scope.usergroups = response.user_types;
                         });
                 break;
             default:

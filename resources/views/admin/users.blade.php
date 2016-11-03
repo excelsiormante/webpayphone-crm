@@ -192,25 +192,21 @@
 
                             <tr>
                                 <td class="col-md-4 mod">
-                                    <label for="email" class="control">Password:</label>
+                                    <label for="usergroup" class="control">User group:</label>
                                 </td>
                                 <td class="col-md-8">
-                                    <input type='password' id="id_password" name="password" value="<% user.password %>" ng-model="user.password" autocomplete="off" class="form-control" required ng-touched />
-                                    <span class="help-inline" ng-show="userForm.password.$invalid">Password is required.</span>
+                                    <select ng-model="user.usergroup" ng-options="usergroup as usergroup.label for usergroup in usergroups track by usergroup.value"></select>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td class="col-md-4 mod">
-                                    <label for="usergroup" class="control">User group:</label>
+                                    <label for="status" class="control">Status:</label>
                                 </td>
                                 <td class="col-md-8">
-                                    <select type="select" id="id_usergroup" name="usergroup" value="<%user.usergroup%>"  ng-model="user.groupname" class="form-control" ng-options="user.usergroup as user.groupname for user in users" required ng-touched>
-                                        <option value="">Select User group</option>
-                                    </select>
+                                    <select ng-model="user.status" ng-options="status as status.label for status in statuses track by status.value"></select>
                                 </td>
                             </tr>
-
                         </table>
                     </form>
                 </div>
