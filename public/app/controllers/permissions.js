@@ -9,24 +9,9 @@ app.controller('PermissionsController', function($scope, $http, $interval) {
         $scope.info = true;
 		$http.get(public + 'api/permissions').
 		success(function(data, status, headers, config) {
-                    angular.forEach(data,function(datum){
-                        alert(datum);
-                    });
-                    
-                    
-                    
-                    
-                    $scope.usergroups = data.usergroups;
+                    $scope.usergroups = angular.fromJson(data.usergroups);
                     $scope.selected_group = $scope.usergroups[0];
                     $scope.loading = false;
-                    $scope.items = [{
-                        id: 1,
-                        label: 'aLabel'
-                      }, {
-                        id: 2,
-                        label: 'bLabel'
-                      }];
-                    $scope.selected = $scope.items[0];
 		});
 	};
 
