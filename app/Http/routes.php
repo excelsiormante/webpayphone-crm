@@ -37,52 +37,17 @@ Route::get('admin/auditlogs', 'AuditlogsController@showIndex');
 
 // Backend functions for Web Payphone CRM
 Route::group(['prefix' => 'creds'], function () {
-    Route::get('login', 'APICredentialController@show_login');
-    
+    Route::get('login', 'CredentialController@show_login');
     /* 
      * @params for creds/login
      * username => Username of the user
      * password => Password of the user
      */
-    Route::post('login', 'APICredentialController@login');
+    Route::post('login', 'CredentialController@login');
     /* 
      * @params for creds/logout
      */
-    Route::get('logout', 'APICredentialController@logout');
-    /*
-     *  @params for creds/edit_user
-     *  'username'      => Username of the user,
-     *  'password'      => Password of the user,
-     *  'usertype_id'   => User Type ID of the User,
-     *  'fullname'      => Full Name of the user,
-     *  'email_address' => Email Address of the User,
-     *  'status'        => Status of the User,
-     *  'user_id'       => User ID of user if edited ("0" for add)
-     */
-    Route::post('edit_user', 'APICredentialController@edit_user');
-    /*
-     * @param for creds/get_admin_users
-     * 'search' => Search Parameter
-     */
-    Route::post('get_admin_users', 'APICredentialController@get_admin_users');
-    /*
-     * @param for creds/get_product_desc
-     * 'user_id' => User ID of the product
-     */
-    Route::post('get_admin_user_desc', 'APICredentialController@get_admin_user_desc');
-    /* @params for creds/add_user_type
-     * 'usertype' => Name of User type
-     */
-    Route::post('add_user_type', 'APICredentialController@add_user_type');
-    /* @params for creds/edit_permissions
-     * 'usertype_id' => Usertype ID,
-     * 'module_name' => Module Name of the page or function,
-     * 'permissions' => URL Path of the page or function,
-     * 'is_valid'    => Validity of the permission
-     * 
-     * Note: Multiarray Values ( use Module Name for Multi Array Index )
-     */
-    Route::get('edit_permissions', 'APICredentialController@edit_permissions');
+    Route::get('logout', 'CredentialController@logout');
 });
 
 Route::group(['prefix' => 'prods'], function() {
