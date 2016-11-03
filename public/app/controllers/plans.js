@@ -38,10 +38,9 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 plan_duration:  $scope.plan.plan_duration,
                 nominations:  $scope.plan.nominations,
                 price:  $scope.plan.price,
-                name: $scope.plan.name,
+                name: $scope.plan.name
 
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.plans = '';
                 $scope.init();
@@ -58,10 +57,9 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 plan_duration:  $scope.plan.plan_duration,
                 nominations:  $scope.plan.nominations,
                 price:  $scope.plan.price,
-                name: $scope.plan,name,
-
+                name: $scope.plan.name
+                
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.plans = '';
                 $scope.init();
@@ -93,14 +91,12 @@ app.controller('PlansController', function($scope, $http, $interval) {
                 $scope.id = id;
                 $http.get(public + 'api/plans/' + id)
                         .success(function(response) {
-                            console.log(response);
                             $scope.plan = response;
                         });
                 break;
             default:
                 break;
         }
-        console.log(id);
         $('#myModal').modal('show');
     };
 

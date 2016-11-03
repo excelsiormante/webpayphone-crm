@@ -16,16 +16,35 @@ class SubscribersController extends Controller
      */
     public function index()
     {
-        $data = User::on('pgsql2')->get();
-        return json_encode($data);
+        $subscribers = array();
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_subscribers()
+                      RESULT (subscriber_id integer, username varchar, user_type varchar, date_created timestamp, status integer);";
+            $result = DB::select($query);
+            
+            if ( count($result) > 0 ) {
+                foreach ($result as $value) {
+                    $status = Common::get_status($value->status);
+                    $subscriber = array(
+                                    'id'           => $value->subscriber_id,
+                                    'username'     => $value->username,
+                                    'user_type'    => $value->user_type,
+                                    'date_created' => $value->date_created,
+                                    'status'       => $status['label']
+                                );
+                    array_push($subscribers, $subscriber);
+                }
+            }
+        } catch (Exception $exc) {
+            
+        }
+        return json_encode($subscribers);
     }
 
 
      public function showIndex()
     {
-            $subscribers = User::on('pgsql2')->get();
-            return view('admin.subscribers')
-                ->with('subscribers', $subscribers);
+        return view('admin.subscribers');
     }
 
     /**
@@ -62,10 +81,29 @@ class SubscribersController extends Controller
      */
     public function show($id) 
     {
-        $subscriber = User::on('pgsql2')->find($id);
-        
-        
-        return $subscriber;
+        $return = array(
+            "result" => config('constants.RESULT_INITIAL')
+        );
+        try {
+            $query = "SELECT * FROM pgc_halo.fn_get_subscriber_desc(?)
+                      RESULT (subscriber_id integer, username varchar, user_type character varying, ewallet float, firstname character varying, middlename character varying, lastname character varying, address character varying, bdate date, email_address character varying, status integer);";
+            
+            $values = array($id);
+            $result = DB::select($query, $values);
+            $result[0]->status = Common::get_status($result[0]->status);
+            
+            $return = array(
+                    "result"   => config('constants.RESULT_SUCCESS'),
+                    "data"     => $result[0],
+                    "statuses" => config('constants.STATUS')
+                );
+        } catch (Exception $exc) {
+            $return = array(
+                        "result" => config('constants.RESULT_ERROR'),
+                        "message" => $exc->getMessage()
+                    );
+        }
+        return json_encode($return);
     }
 
     /**

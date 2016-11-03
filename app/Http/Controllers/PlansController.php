@@ -200,6 +200,6 @@ class PlansController extends Controller
      */
     public function destroy($id)
     {
-        Plan::destroy($id);
+        
     }
 }

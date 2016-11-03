@@ -50,7 +50,6 @@ app.controller('UsersController', function($scope, $http, $interval) {
                 password:  $scope.user.password,
 
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.users = '';
                 $scope.init();
@@ -68,7 +67,6 @@ app.controller('UsersController', function($scope, $http, $interval) {
 
 
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.users = '';
                 $scope.init();
@@ -97,7 +95,6 @@ app.controller('UsersController', function($scope, $http, $interval) {
                 $scope.id = id;
                 $http.get(public + 'api/users/' + id)
                         .success(function(response) {
-                            console.log(response);
                             $scope.user = response;
                         });
                 break;

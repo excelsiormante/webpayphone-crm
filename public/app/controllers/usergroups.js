@@ -36,7 +36,6 @@ app.controller('UsergroupsController', function($scope, $http, $interval) {
                 status:  $scope.usergroup.status,
 
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.usergroups = '';
                 $scope.init();
@@ -51,7 +50,6 @@ app.controller('UsergroupsController', function($scope, $http, $interval) {
                 status:  $scope.usergroup.status,
 
             }).success(function(data, status, headers, config, response) {
-                console.log(response);
                 $('#myModal').modal('hide');
                 $scope.usergroups = '';
                 $scope.init();
@@ -78,14 +76,12 @@ app.controller('UsergroupsController', function($scope, $http, $interval) {
                 $scope.id = id;
                 $http.get(public + 'api/usergroups/' + id)
                         .success(function(response) {
-                            console.log(response);
                             $scope.usergroup = response;
                         });
                 break;
             default:
                 break;
         }
-        console.log(id);
         $('#myModal').modal('show');
     };
 

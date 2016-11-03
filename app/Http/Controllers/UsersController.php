@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-         $users = array();
+        $users = array();
         try {
             $query = "SELECT * FROM pgc_halo.fn_get_admin_users()
                       RESULT (id integer, username varchar, fullname varchar, usergroup integer , email varchar, status integer);";
@@ -140,7 +140,7 @@ class UsersController extends Controller
             $fullname = Input::get('fullname');
             $usergroup = Input::get('usergroup');
             $status = Input::get('status');
-            $values = array($password,$usergroup, $fullname, $username, $email, (int)$id, 0);
+            $values = array($password,$usergroup, $fullname, $username, $email, $status, (int)$id);
             $result = DB::select($query, $values);
             if ( $result[0]->is_added === TRUE ) {
                 $return = array(
@@ -170,6 +170,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        /* User::on('pgsql2')->destroy($id); */
+        
     }
 }

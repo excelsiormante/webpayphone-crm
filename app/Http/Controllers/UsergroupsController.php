@@ -21,7 +21,7 @@ class UsergroupsController extends Controller
             $query = "SELECT * FROM pgc_halo.fn_get_user_types()
                       RESULT (user_type_id integer, user_type varchar, description varchar, status integer);";
             $result = DB::select($query);
-            dd($result);
+            
             if ( count($result) > 0 ) {
                 foreach ($result as $value) {
                     $usergroup = array(

@@ -13,4 +13,15 @@ class Common {
         
         DB::select($query, $values);
     }
+    
+    public static function get_status($status_id){
+        $return = false;
+        foreach (config('constants.STATUS') as $value) {
+            if ( $status_id == $value['value'] ) {
+                $return = $value;
+                break;
+            }
+        }
+        return $return;
+    }
 }

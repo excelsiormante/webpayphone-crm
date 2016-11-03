@@ -172,6 +172,22 @@
                             </a>
 
                         </li>
+
+                        <li>
+
+                            <a href="{{ url('admin/transaction') }}"><i class="fa fa-table fa-fw"></i> 
+                                Transactions
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a href="{{ url('admin/ewallet') }}"><i class="fa fa-table fa-fw"></i> 
+                                E-Wallet
+                            </a>
+
+                        </li>
                     
                     </ul>
                 </div>
