@@ -15,10 +15,7 @@ class PermissionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-    }
-
-
-    public function showIndex(){
+        $return = array();
         $permissions = array();
         $usergroups  = array();
         try {
@@ -36,10 +33,10 @@ class PermissionsController extends Controller
                     }
                 }
             }
-            
+
             $query = "SELECT * FROM pgc_halo.fn_get_permissions(?)
                       RESULT (user_type_id integer, module_name varchar, permission varchar, is_valid boolean);";
-            
+
             $value = array(1);
             $result = DB::select($query,$value);
             if ( count($result) > 0 ) {
@@ -55,11 +52,16 @@ class PermissionsController extends Controller
                 }
             }
         } catch (Exception $exc) {
-            
+
         }
-        return view('admin.permissions')
-                ->with('permissions', $permission)
-                ->with('usergroups', $usergroups);
+        $return['permissions'] = json_encode($permissions);
+        $return['usergroups'] = json_encode($usergroups);
+        return json_encode($return);
+    }
+
+
+    public function showIndex(){
+        return view('admin.permissions');
     }
 
     /**

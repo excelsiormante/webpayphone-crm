@@ -30,6 +30,7 @@ Route::get('admin/usergroups', 'UsergroupsController@showIndex');
 Route::resource('api/usergroups', 'UsergroupsController');
 
 Route::get('admin/permissions', 'PermissionsController@showIndex');
+Route::resource('api/permissions', 'PermissionsController');
 
 Route::get('admin/auditlogs', 'AuditlogsController@showIndex');
 

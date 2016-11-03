@@ -12,26 +12,39 @@
     <script src="{{ asset('app/app.js') }}"></script>
 
     <!-- AngularJS Chief Objective Controller Script -->
-    <script src="{{ asset('app/controllers/plans.js') }}"></script>
+    <script src="{{ asset('app/controllers/permissions.js') }}"></script>
 
     <script src="{{ asset('js/showtabledata.js') }}"></script>
 
     <br>
+    <div ng-app="unitScorecardApp" ng-controller="PermissionsController">
+        
     <div class="wrap">
 
 
 			<div class="panel panel-warning objectives-custom-panel">
 				<div class="panel-heading objectives-custom-heading">
 					<i class="fa fa-key fa-5x"></i> 
-		                <h2>
+                                <h2>
 		                   <b>Assign Permissions </b>
 		                </h2>
+                                        <h2>
+                                            <% usergroups %>
+                                        </h2>
+                                        <h2>
+                                            <% items %>
+                                        </h2>
 		            <i ng-show="loading" class="fa fa-spinner fa-spin"></i>
 				</div>
 				<div class="panel-body">
 
 					<div><label>Groups</label></div>
-                        <div style='color:black'><select></select></div><br><br>
+                        <div style='color:black'>
+                            <select ng-options="group as group.label for group in usergroups track by group.id" ng-model="selected_group"></select>
+                            <select ng-options="item as item.label for item in items track by item.id" ng-model="selected"></select>
+                        </div><br><br>
+                            
+                        </div><br><br>
 
 		            <h3>Users</h3>
 
@@ -80,5 +93,5 @@
 
 			
 	</div>
-
+        </div>
 @endsection
