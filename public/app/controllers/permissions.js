@@ -1,6 +1,7 @@
 app.controller('PermissionsController', function($scope, $http, $interval) {
 
     $scope.usergroups = [];
+    $scope.permissions = [];
     $scope.loading = true;
     $scope.info = false;
  
@@ -11,6 +12,7 @@ app.controller('PermissionsController', function($scope, $http, $interval) {
 		success(function(data, status, headers, config) {
                     $scope.usergroups = angular.fromJson(data.usergroups);
                     $scope.selected_group = $scope.usergroups[0];
+                    $scope.permissions = angular.fromJson(data.permissions);
                     $scope.loading = false;
 		});
 	};
@@ -21,37 +23,20 @@ app.controller('PermissionsController', function($scope, $http, $interval) {
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     };
 
-    $scope.save = function(modalstate, id) 
+    $scope.save = function() 
     {
+        var id = $scope.selected_group.id
         $scope.loading = true;
         var url = public + 'api/permissions';
-
-        //append Unit Objective ID to the URL if the form is in edit mode
-        if (modalstate === 'edit')
-        {
-            url += "/" + id;
-
-            $http.put(url, {
-                
-            }).success(function(data, status, headers, config, response) {
-                $('#myModal').modal('hide');
-                $scope.permissions = '';
-                $scope.init();
-                $scope.loading = false;
-            });
-        }
-        else if (modalstate === 'add')
-        {
-            $http.post(url, {
-                
-            }).success(function(data, status, headers, config, response) {
-                $('#myModal').modal('hide');
-                $scope.permissions = '';
-                $scope.init();
-                $scope.loading = false;
-            });
-        }
-        // 
+        url += "/" + id;
+        
+        $http.put(url, {
+            permissions : $scope.permissions
+        }).success(function(data, status, headers, config, response) {
+            $('#myModal').modal('hide');
+            $scope.init();
+            $scope.loading = false;
+        });
     };
 
     $scope.toggle = function(modalstate, id) 

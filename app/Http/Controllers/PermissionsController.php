@@ -43,6 +43,7 @@ class PermissionsController extends Controller
                 foreach ($result as $value) {
                     $permission = array(
                                     'permission' => $value->permission,
+                                    'html_name'  => strtolower($value->module_name . "_" .$value->permission),
                                     'is_valid'   => $value->is_valid
                                 );
                     if ( !isset($permissions[$value->module_name]) ) {
@@ -71,23 +72,6 @@ class PermissionsController extends Controller
      */
     public function store()
     {
-
-        /*
-        $admin_id = Session::get('aid', 'default');
-        $action = 'Added a plan "' . Request::input('plan_name') . '"';
-
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        */
-
-/*
-        $subscriber = new User(Request::all());
-        $subscriber->setConnection('pgsql2');
-        $subscriber->save();
-
-        return $subscriber; */
     }
 
     /**
@@ -98,10 +82,6 @@ class PermissionsController extends Controller
      */
     public function show($id) 
     {
-     /*   $subscriber = User::on('pgsql2')->find($id);
-        
-        
-        return $subscriber; */
     }
 
     /**
@@ -112,24 +92,35 @@ class PermissionsController extends Controller
      */
     public function update($id)
     {
-
-
-     /*   $subscriber = User::on('pgsql2')->find($id);
-        $subscriber->update(Request::all());
-        $subscriber->save();
- 
+        $permissions = Input::get('permissions');
         
-        $chief_id = Session::get('chief_user_id', 'default');
-        $chief = Request::input('ChiefID');
-        $action = 'Updated an Objective: "' . Request::input('ChiefObjectiveName') . '"';
+        $return = array(
+                    "result" => config('constants.RESULT_INITIAL')
+                );
+        try {
+            DB::transaction(function () use ($id, $permissions) {
+                $query = "SELECT pgc_halo.fn_edit_permission(?,?,?,?);";
+                foreach ($permissions as $key => $description) {
+                    foreach ($description as $value) {
+                        $permission = $value['permission'];
+                        $is_valid   = $value['is_valid'];
+                        $values = array($id,$key,$permission,$is_valid);
+                        DB::select($query, $values);
+                    }
 
-
-        DB::insert('insert into audit_trails (Action, UserUnitID, UnitID) values (?,?,?)', array($action, $chief_id, $chief));
-
-        DB::insert('insert into chief_audit_trails (Action, UserChiefID, ChiefID) values (?,?,?)', array($action, $chief_id, $chief));
-        
-
-        return $subscriber; */
+                }
+            });
+            $return = array(
+                    "result"  => config('constants.RESULT_SUCCESS'),
+                    "message" => "Permission successfully updated."
+                );
+        } catch (Exception $exc) {
+            $return = array(
+                        "result" => config('constants.RESULT_ERROR'),
+                        "message" => $exc->getMessage()
+                    );
+        }
+        echo json_encode($return);
     }
 
     /**
@@ -140,6 +131,5 @@ class PermissionsController extends Controller
      */
     public function destroy($id)
     {
-        /* User::on('pgsql2')->destroy($id); */
     }
 }
